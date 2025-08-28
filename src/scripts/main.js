@@ -6,19 +6,18 @@ const appendColBtn = document.querySelector('.append-column');
 const removeColBtn = document.querySelector('.remove-column');
 const table = document.querySelector('.field');
 
-changeRowBtnsState();
-changeColBtnsState();
+changeBtnsState();
 
 appendRowBtn.addEventListener('click', () => {
   if (table.rows.length >= 10) {
     return;
   }
 
-  const newRowCopy = table.rows[0].cloneNode(true);
+  const newRowCopy = table.tBodies[0].rows[0].cloneNode(true);
 
   table.tBodies[0].append(newRowCopy);
 
-  changeRowBtnsState();
+  changeBtnsState();
 });
 
 appendColBtn.addEventListener('click', () => {
@@ -35,7 +34,7 @@ appendColBtn.addEventListener('click', () => {
     row.append(colCopy);
   });
 
-  changeColBtnsState();
+  changeBtnsState();
 });
 
 removeRowBtn.addEventListener('click', () => {
@@ -43,9 +42,9 @@ removeRowBtn.addEventListener('click', () => {
     return;
   }
 
-  table.rows[table.rows.length - 1].remove();
+  table.rows[table.tBodies[0].rows.length - 1].remove();
 
-  changeRowBtnsState();
+  changeBtnsState();
 });
 
 removeColBtn.addEventListener('click', () => {
@@ -59,15 +58,12 @@ removeColBtn.addEventListener('click', () => {
     row.cells[row.cells.length - 1].remove();
   });
 
-  changeColBtnsState();
+  changeBtnsState();
 });
 
-function changeRowBtnsState() {
+function changeBtnsState() {
   appendRowBtn.disabled = table.rows.length >= 10;
   removeRowBtn.disabled = table.rows.length <= 2;
-}
-
-function changeColBtnsState() {
   appendColBtn.disabled = table.rows[0].cells.length >= 10;
   removeColBtn.disabled = table.rows[0].cells.length <= 2;
 }
